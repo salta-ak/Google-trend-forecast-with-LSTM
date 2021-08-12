@@ -2,7 +2,8 @@
 import os
 import pandas as pd
 import numpy as np
-
+from pytrends.request import TrendReq
+pytrends = TrendReq(hl='en-US', tz=360)
 
 # Load data from with pytrend API
 
