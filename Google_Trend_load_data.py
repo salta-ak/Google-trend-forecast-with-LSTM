@@ -6,28 +6,16 @@ import numpy as np
 
 # Load data from with pytrend API
 
-from pytrends.request import TrendReq
-pytrends = TrendReq(hl='en-US', tz=360)
-
-
-kw_list = ["Bitcoin","flu","sale", 'rent']
-pytrends.build_payload(kw_list, cat=0, timeframe='today 5-y', geo='', gprop='')
-data=pytrends.interest_over_time()
-series = data.iloc[: , :-1].astype(float).sort_index()
-train, test = train_test_split(series, test_size=0.1)
+kw_all=[kw_list,btc_list,st_list,cov_list]
+kw_list = ["bitcoin","COVID-19","stock price"]
+btc_list=["bitcoin","cryptocurrency","blockchain+bitcoin"]
+st_list=["stock+price","stock+index","futures+stock"]
+cov_list=["Covid","cough+covid","symptoms+covid"]
+for i in kw_all:
+    pytrends.build_payload(i, cat=0, timeframe='today 5-y', geo='', gprop='')
+    data=pytrends.interest_over_time()
+    data=data.loc[~(data==0.0).all(axis=1)]
+    series = data.iloc[: , :-1].astype(float).sort_index()
+    series.to_csv('{}.csv'.format(i))
     
-#data.to_csv('google_w.csv')
-
-# Split data 
-
-def train_test_split(data, test_size=0.1):
-    split_row = len(data) - int(test_size * len(data))
-    train_data = data.iloc[:split_row]
-    test_data = data.iloc[split_row:]
-    return train_data, test_data
-
-train, test = train_test_split(series, test_size=0.1)
-
-#train, test = train_test_split(series, test_size=0.1)
-#train.to_csv('train.csv')
-#train.to_csv('train.csv')
+    
