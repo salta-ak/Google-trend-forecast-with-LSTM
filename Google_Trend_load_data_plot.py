@@ -7,12 +7,13 @@ pytrends = TrendReq(hl='en-US', tz=360)
 
 # Load data from with pytrend API
 
-kw_all=[kw_list,btc_list,st_list,cov_list]
+
 filename=['bitcoin','covid','stock_price']
 kw_list = ["bitcoin","COVID-19","stock price"]
 btc_list=["bitcoin","cryptocurrency","blockchain+bitcoin"]
 st_list=["stock+price","stock+index","futures+stock"]
 cov_list=["Covid","cough+covid","symptoms+covid"]
+kw_all=[kw_list,btc_list,st_list,cov_list]
 count=0
 figure, axes = plt.subplots(4, 1, figsize=(15,15))
 for i,j in zip(kw_all,filename):
